@@ -15,8 +15,19 @@ pub fn lerp(t: f32, a: vec2, b: vec2) -> xy<f32> { (1.-t)*a + t*b }
 pub fn dot(a: vec2, b: vec2) -> f32 { a.x*b.x + a.y*b.y }
 pub fn cross(a: vec2, b: vec2) -> f32 { a.x*b.y - a.y*b.x }
 pub fn sq(x:vec2) -> f32 { dot(x, x) }
-pub fn norm(v:vec2) -> f32 { core::num::sqrt(sq(v)) }
-pub fn atan(v:vec2) -> f32 { core::num::atan(v.y,v.x) }
+pub fn norm(v:vec2) -> f32 { sq(v).sqrt() }
+pub fn atan(v:vec2) -> f32 { v.y.atan2(v.x) }
 
-impl std::ops::Mul<uint2> for core::num::Ratio { type Output=uint2; #[track_caller] fn mul(self, b: uint2) -> Self::Output { xy{x:self*b.x, y:self*b.y} } }
-impl std::ops::Div<core::num::Ratio> for uint2 { type Output=uint2; #[track_caller] fn div(self, r: core::num::Ratio) -> Self::Output { xy{x:self.x/r, y:self.y/r} } }
+#[derive(Default)] pub struct Rect { pub min: int2, pub max: int2 }
+impl Rect {
+	pub fn translate(&mut self, offset: int2) { self.min += offset; self.max += offset; }
+	pub fn clip(&self, b: Rect) -> Self { Rect{min: core::vector::component_wise_max(self.min,b.min), max: core::vector::component_wise_min(self.max,b.max)} }
+	pub fn size(&self) -> size { (self.max-self.min).unsigned() }
+}
+impl From<size> for Rect { fn from(size: size) -> Self { Self{ min: core::Zero::zero(), max: size.signed()} } }
+
+impl std::ops::Mul<uint2> for core::num::Ratio { type Output=uint2; fn mul(self, b: uint2) -> Self::Output { xy{x:self*b.x, y:self*b.y} } }
+fn idiv_floor(scale: core::num::Ratio, b: int2) -> int2 { xy{x:scale.ifloor(b.x), y:scale.ifloor(b.y)} }
+fn idiv_ceil(scale: core::num::Ratio, b: int2) -> int2 { xy{x:scale.iceil(b.x), y:scale.iceil(b.y)} }
+impl std::ops::Mul<Rect> for core::num::Ratio { type Output=Rect; fn mul(self, b: Rect) -> Self::Output { Rect{min:idiv_floor(self, b.min), max:idiv_ceil(self, b.max)} } }
+impl std::ops::Div<core::num::Ratio> for uint2 { type Output=uint2; fn div(self, r: core::num::Ratio) -> Self::Output { xy{x:self.x/r, y:self.y/r} } }
