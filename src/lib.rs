@@ -1,3 +1,4 @@
+#![cfg_attr(feature="iter", feature(iterator_fold_self))]
 core::vector!(2 xy T T, x y, X Y);
 
 impl xy<u32> { pub const fn signed(self) -> xy<i32> { xy{x: self.x as i32, y: self.y as i32} } }
@@ -27,7 +28,8 @@ impl Rect {
 impl From<size> for Rect { fn from(size: size) -> Self { Self{ min: core::Zero::zero(), max: size.signed()} } }
 
 impl std::ops::Mul<uint2> for core::num::Ratio { type Output=uint2; fn mul(self, b: uint2) -> Self::Output { xy{x:self*b.x, y:self*b.y} } }
-fn idiv_floor(scale: core::num::Ratio, b: int2) -> int2 { xy{x:scale.ifloor(b.x), y:scale.ifloor(b.y)} }
-fn idiv_ceil(scale: core::num::Ratio, b: int2) -> int2 { xy{x:scale.iceil(b.x), y:scale.iceil(b.y)} }
-impl std::ops::Mul<Rect> for core::num::Ratio { type Output=Rect; fn mul(self, b: Rect) -> Self::Output { Rect{min:idiv_floor(self, b.min), max:idiv_ceil(self, b.max)} } }
+pub fn ceil(scale: &core::num::Ratio, v: uint2) -> uint2 { xy{x:scale.ceil(v.x), y:scale.ceil(v.y)} }
+fn ifloor(scale: core::num::Ratio, b: int2) -> int2 { xy{x:scale.ifloor(b.x), y:scale.ifloor(b.y)} }
+fn iceil(scale: core::num::Ratio, b: int2) -> int2 { xy{x:scale.iceil(b.x), y:scale.iceil(b.y)} }
+impl std::ops::Mul<Rect> for core::num::Ratio { type Output=Rect; fn mul(self, b: Rect) -> Self::Output { Rect{min:ifloor(self, b.min), max:iceil(self, b.max)} } }
 impl std::ops::Div<core::num::Ratio> for uint2 { type Output=uint2; fn div(self, r: core::num::Ratio) -> Self::Output { xy{x:self.x/r, y:self.y/r} } }
