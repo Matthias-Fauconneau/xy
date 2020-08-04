@@ -26,7 +26,7 @@ impl Rect {
 	pub fn clip(&self, b: Rect) -> Self { Rect{min: core::vector::component_wise_max(self.min,b.min), max: core::vector::component_wise_min(self.max,b.max)} }
 	pub fn size(&self) -> size { (self.max-self.min).unsigned() }
 }
-impl From<size> for Rect { fn from(size: size) -> Self { Self{ min: core::Zero::zero(), max: size.signed()} } }
+impl From<size> for Rect { fn from(size: size) -> Self { Self{ min: core::num::Zero::zero(), max: size.signed()} } }
 
 impl std::ops::Mul<uint2> for core::num::Ratio { type Output=uint2; fn mul(self, b: uint2) -> Self::Output { xy{x:self*b.x, y:self*b.y} } }
 pub fn ceil(scale: &core::num::Ratio, v: uint2) -> uint2 { xy{x:scale.ceil(v.x), y:scale.ceil(v.y)} }
