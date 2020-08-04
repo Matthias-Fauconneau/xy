@@ -12,6 +12,7 @@ impl From<xy<u32>> for xy<f32> { fn from(f: xy<u32>) -> Self { xy{x: f.x as f32,
 #[allow(non_camel_case_types)] pub type size = xy<u32>;
 #[allow(non_camel_case_types)] pub type vec2 = xy<f32>;
 
+pub fn div_ceil(n: uint2, d: u32) -> uint2 { xy{x:core::num::div_ceil(n.x,d), y:core::num::div_ceil(n.y,d)} }
 pub fn lerp(t: f32, a: vec2, b: vec2) -> xy<f32> { (1.-t)*a + t*b }
 pub fn dot(a: vec2, b: vec2) -> f32 { a.x*b.x + a.y*b.y }
 pub fn cross(a: vec2, b: vec2) -> f32 { a.x*b.y - a.y*b.x }
