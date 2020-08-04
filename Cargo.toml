@@ -6,6 +6,7 @@ edition = '2018'
 
 [features]
 iter = ['core/array']
+default = ['iter']
 
 [dependencies]
 core = { version = '', path = '../core', features = ['vector'] }
