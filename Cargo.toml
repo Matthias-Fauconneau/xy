@@ -4,9 +4,14 @@ version = '0.0.0'
 authors = ['Matthias Fauconneau <matthias.fauconneau@gmail.com>']
 edition = '2018'
 
+[lib]
+path = 'lib.rs'
+
 [features]
-iter = ['core/array']
-default = ['iter']
+iter = ['vector/array']
+zero = ['vector/num','num']
+default = ['iter','zero']
 
 [dependencies]
-core = { version = '', path = '../core', features = ['vector'] }
+num = { path = '../num', optional = true }
+vector = { path = '../vector' }
