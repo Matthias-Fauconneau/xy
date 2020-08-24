@@ -20,7 +20,7 @@ pub fn sq(x:vec2) -> f32 { dot(x, x) }
 pub fn norm(v:vec2) -> f32 { sq(v).sqrt() }
 pub fn atan(v:vec2) -> f32 { v.y.atan2(v.x) }
 
-#[derive(Default)] pub struct Rect { pub min: int2, pub max: int2 }
+#[derive(Default,Clone,Copy)] pub struct Rect { pub min: int2, pub max: int2 }
 impl Rect {
 	pub fn translate(&mut self, offset: int2) { self.min += offset; self.max += offset; }
 	pub fn clip(&self, b: Rect) -> Self { Rect{min: vector::component_wise_max(self.min,b.min), max: vector::component_wise_min(self.max,b.max)} }
