@@ -36,7 +36,7 @@ impl std::ops::Sub<uint2> for Rect { type Output=Rect; #[track_caller] fn sub(se
 
 impl std::ops::Mul<uint2> for num::Ratio { type Output=uint2; #[track_caller] fn mul(self, b: uint2) -> Self::Output { xy{x:self*b.x, y:self*b.y} } }
 pub fn ceil(scale: &num::Ratio, v: uint2) -> uint2 { xy{x:scale.ceil(v.x), y:scale.ceil(v.y)} }
-fn ifloor(scale: num::Ratio, b: int2) -> int2 { xy{x:scale.ifloor(b.x), y:scale.ifloor(b.y)} }
-fn iceil(scale: num::Ratio, b: int2) -> int2 { xy{x:scale.iceil(b.x), y:scale.iceil(b.y)} }
+pub fn ifloor(scale: num::Ratio, b: int2) -> int2 { xy{x:scale.ifloor(b.x), y:scale.ifloor(b.y)} }
+pub fn iceil(scale: num::Ratio, b: int2) -> int2 { xy{x:scale.iceil(b.x), y:scale.iceil(b.y)} }
 impl std::ops::Mul<Rect> for num::Ratio { type Output=Rect; fn mul(self, b: Rect) -> Self::Output { Rect{min:ifloor(self, b.min), max:iceil(self, b.max)} } }
 impl std::ops::Div<num::Ratio> for uint2 { type Output=uint2; fn div(self, r: num::Ratio) -> Self::Output { xy{x:self.x/r, y:self.y/r} } }
