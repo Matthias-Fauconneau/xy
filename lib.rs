@@ -32,6 +32,8 @@ impl Rect {
 
 impl From<size> for Rect { fn from(size: size) -> Self { Self{ min: num::Zero::zero(), max: size.signed()} } }
 
+impl std::ops::Sub<uint2> for Rect { type Output=Rect; #[track_caller] fn sub(self, b: uint2) -> Self::Output { Rect{min:self.min-b.signed(), max:self.max-b.signed()} } }
+
 impl std::ops::Mul<uint2> for num::Ratio { type Output=uint2; #[track_caller] fn mul(self, b: uint2) -> Self::Output { xy{x:self*b.x, y:self*b.y} } }
 pub fn ceil(scale: &num::Ratio, v: uint2) -> uint2 { xy{x:scale.ceil(v.x), y:scale.ceil(v.y)} }
 fn ifloor(scale: num::Ratio, b: int2) -> int2 { xy{x:scale.ifloor(b.x), y:scale.ifloor(b.y)} }
