@@ -8,9 +8,8 @@ edition = '2018'
 path = 'lib.rs'
 
 [features]
-iter = ['vector/array']
 zero = ['vector/num','num']
-default = ['iter','zero']
+default = ['zero']
 
 [dependencies]
 num = { path = '../num', optional = true }
