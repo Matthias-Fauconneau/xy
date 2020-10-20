@@ -1,5 +1,7 @@
-#![cfg_attr(feature="iter", feature(iterator_fold_self))]
+#![feature(array_map,array_value_iter,iterator_fold_self)]
 vector::vector!(2 xy T T, x y, X Y);
+
+impl<T> xy<T> { pub fn yx(self) -> xy<T> { xy{x: self.y, y: self.x} } }
 
 impl xy<u32> { pub const fn signed(self) -> xy<i32> { xy{x: self.x as i32, y: self.y as i32} } }
 impl xy<i32> { pub const fn unsigned(self) -> xy<u32> { xy{x: self.x as u32, y: self.y as u32} } }
