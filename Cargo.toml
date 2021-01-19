@@ -1,16 +1,16 @@
 [package]
-name = 'xy'
-version = '0.0.0'
-authors = ['Matthias Fauconneau <matthias.fauconneau@gmail.com>']
-edition = '2018'
+name= 'xy'
+version= '0.0.0'
+authors= ['Matthias Fauconneau <matthias.fauconneau@gmail.com>']
+edition= '2018'
 
-[lib]
-path = 'lib.rs'
+[dependencies]
+num= {git='https://github.com/Matthias-Fauconneau/num', optional=true}
+vector= {git='https://github.com/Matthias-Fauconneau/vector'}
 
 [features]
 zero = ['vector/num','num']
 default = ['zero']
 
-[dependencies]
-num = { path = '../num', optional = true }
-vector = { path = '../vector' }
+[lib]
+path = 'lib.rs'
